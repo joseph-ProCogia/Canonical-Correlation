@@ -1,0 +1,107 @@
+---
+title: "Canonical Correlation Analysis"
+author: "Joseph Korszun"
+format: revealjs
+editor: visual
+---
+
+------------------------------------------------------------------------
+
+## Canonical Correlation Analysis
+
+::: incremental
+-   What is Canonical Correlation Analysis?
+-   When to use CCA?
+    -   PCA vs CCA
+    -   MLR vs CCA
+-   Canonical Variables
+-   Canonical Correlation
+-   An Example
+-   References
+:::
+
+------------------------------------------------------------------------
+
+### What is Canonical Correlation Analysis?
+
+::: incremental
+-   Canonical Correlate Analysis (CCA) seeks to identify and quantify associations between two sets of variables.
+-   Developed by Harold Hotelling where he was providing an example of relating arithmetic reading speed and arithmetic reading power
+:::
+
+------------------------------------------------------------------------
+
+### When to use CCA?
+
+::: incremental
+-   Large Sample Size required
+-   Multivariate Normal Distribution assumptions for both data sets of variables
+:::
+
+![](Normal%20Distribution.png){fig-align="right"}
+
+------------------------------------------------------------------------
+
+### PCA and MLR
+
+------------------------------------------------------------------------
+
+### Canonical Variables
+
+------------------------------------------------------------------------
+
+### Canonical Correlation
+
+------------------------------------------------------------------------
+
+### An Example in R
+
+```{r}
+#| echo: fenced
+#| #| code-line-numbers: "|6|8"
+
+# load libraries
+library(lme4) # linear mixed-effect modeling
+library(CCA) # CCA package
+library(CCP) # significance tests for CCA
+library(ggplot2) # plotting package
+
+# read in data 
+example <- read.csv2("CanonicalCorrelationAnalysisData.csv", header = T, sep = ",")
+
+# print 5 rows
+head(example)
+
+# check structure of data
+str(example)
+
+
+
+```
+
+------------------------------------------------------------------------
+
+### An Example in Python
+
+```{.python}
+
+
+
+
+
+```
+
+------------------------------------------------------------------------
+
+### References
+
+::: non-incremental
+-   [Applied Multivariate Statistical Analysis](https://www.amazon.com/Multivariate-Statistical-Analysis-Classics-Statistics/dp/0134995392/ref=sr_1_1?keywords=applied+multivariate+statistical+analysis&qid=1660653698&sprefix=applied+multivari%2Caps%2C296&sr=8-1)
+-   [PSU Lecture Material](https://online.stat.psu.edu/stat505/book/export/html/682)
+-   [UCLA Lecture Material](https://stats.oarc.ucla.edu/r/dae/canonical-correlation-analysis/#:~:text=Canonical%20correlation%20analysis%20is%20used,are%20multiple%20intercorrelated%20outcome%20variables)
+-   [Towards Data Science Article](https://towardsdatascience.com/canonical-correlation-analysis-b1a38847219d)
+-   [Medium Article](https://medium.com/analytics-vidhya/canonical-correlation-analysis-cca-in-r-a-non-technical-primer-b67d9bdeb9dd)
+- [AWS Dataset](https://articledatas3.s3.eu-central-1.amazonaws.com/CanonicalCorrelationAnalysisData.csv)
+:::
+
+------------------------------------------------------------------------
