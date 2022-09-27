@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="Canonical Correlation Analysis_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Canonical Correlation Analysis_files/libs/quarto-html/tabby.min.js"></script>
-<script src="Canonical Correlation Analysis_files/libs/quarto-html/popper.min.js"></script>
-<script src="Canonical Correlation Analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="Canonical Correlation Analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Canonical Correlation Analysis_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="Canonical Correlation Analysis_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="CCA_Update_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CCA_Update_files/libs/quarto-html/tabby.min.js"></script>
+<script src="CCA_Update_files/libs/quarto-html/popper.min.js"></script>
+<script src="CCA_Update_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="CCA_Update_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CCA_Update_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="CCA_Update_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.0.36">
 
   <meta name="author" content="Joseph Korszun">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="Canonical Correlation Analysis_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="Canonical Correlation Analysis_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="CCA_Update_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="CCA_Update_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -88,11 +88,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="Canonical Correlation Analysis_files/libs/revealjs/dist/theme/quarto.css" id="theme">
-  <link href="Canonical Correlation Analysis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="Canonical Correlation Analysis_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="Canonical Correlation Analysis_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="Canonical Correlation Analysis_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="CCA_Update_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="CCA_Update_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="CCA_Update_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="CCA_Update_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="CCA_Update_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -392,14 +392,15 @@
 <div>
 <ul>
 <li class="fragment">What is Canonical Correlation Analysis?</li>
+<li class="fragment">Defining Canonical Correlations</li>
+<li class="fragment">Canonical Variates and Canonical Correlations</li>
 <li class="fragment">When to use CCA?
 <ul>
 <li class="fragment">PCA vs CCA</li>
 <li class="fragment">MLR vs CCA</li>
 </ul></li>
-<li class="fragment">Canonical Variables</li>
-<li class="fragment">Canonical Correlation</li>
-<li class="fragment">An Example</li>
+<li class="fragment">An Example (R and Python provided)</li>
+<li class="fragment">Summary</li>
 <li class="fragment">References</li>
 </ul>
 </div>
@@ -411,6 +412,19 @@
 <ul>
 <li class="fragment">Canonical Correlate Analysis (CCA) seeks to identify and quantify associations between two sets of variables.</li>
 <li class="fragment">Developed by Harold Hotelling where he was providing an example of relating arithmetic reading speed and arithmetic reading power</li>
+<li class="fragment">Focuses on the correlation between the linear combination of variables in one set and the linear combination in another set.</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="defining-canonical-correlations">Defining Canonical Correlations</h3>
+<div>
+<ul>
+<li class="fragment">Determine the pair of linear combinations having the largest correlation</li>
+<li class="fragment">Determine the pair of linear combinations having the largest correlation among all pairs uncorrelated with the initially selected pair, and so forth</li>
+<li class="fragment">The pairs of linear combinations are called canonical variables</li>
+<li class="fragment">Their correlations are called Canonical Correlations</li>
 </ul>
 </div>
 </section>
@@ -421,34 +435,226 @@
 <ul>
 <li class="fragment">Large Sample Size required</li>
 <li class="fragment">Multivariate Normal Distribution assumptions for both data sets of variables</li>
+<li class="fragment">Samples can be used from large data sets, but they should be adequate in size</li>
 </ul>
 </div>
 
 <img data-src="Normal%20Distribution.png" class="r-stretch quarto-figure-right"></section>
 <section class="slide level2">
 
+<h3 id="canonical-variates-and-canonical-correlations">Canonical Variates and Canonical Correlations</h3>
+<div>
+<ul>
+<li class="fragment">We are interested in defining the relationship between two sets of variables</li>
+<li class="fragment">Lets say the first set of variables is represented by the random vector (p x 1) <span class="math display">\[X^{(1)}\]</span></li>
+<li class="fragment">Lets say the second set of variables is represented by the random vector (q x 1) <span class="math display">\[X^{(2)}\]</span></li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="canonical-variates-and-canonical-correlations-1">Canonical Variates and Canonical Correlations</h3>
+<p><span class="math display">\[
+\begin{align}
+    \text{Assume X(1) is smaller} &amp;&amp; X^{(1)} \\
+    \text{Such that} &amp;&amp; p \le q &amp;&amp; \text{and} &amp;&amp; X^{(1)} \le X^{(2)} \\
+    \text{Let} &amp;&amp; E(X^{(1)}) = u^{(1)} &amp;&amp; \text{and} &amp;&amp; E(X^{(2)}) = u^{(2)}
+\end{align}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="canonical-variates-and-canonical-correlations-2">Canonical Variates and Canonical Correlations</h3>
+<ul>
+<li>We consider the X(1) and X(2) jointly here</li>
+</ul>
+<p><span class="math display">\[\mathbf{X_{(p+q)~~x~~1)}} = \left[\begin{array}
+{rrr}
+X_1^{(1)} \\
+X_2^{(1)} \\
+X_p^{(1)} \\
+.....   \\
+X_1^{(2)} \\
+X_2^{(2)} \\
+X_p^{(2)} \\
+\end{array}\right]
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="canonical-variates-and-canonical-correlations-3">Canonical Variates and Canonical Correlations</h3>
+<ul>
+<li>This has a mean vector of</li>
+</ul>
+<p><span class="math display">\[\frac{E(X^{1})}{E(X^{2})} = \frac{u(X^{1})}{u(X^{2})}\]</span></p>
+<ul>
+<li>And a covariance matrix of</li>
+</ul>
+<p><span class="math display">\[\mathbf{E{(X-u)(X-u)'}} = \left[\begin{array}
+{rrr}
+X_{p*p}{(11)} &amp;&amp; X_{p*q}{(12)}\\
+....... &amp;&amp; ........   \\
+X_{q*p}{(21)} &amp;&amp; X_{q*q}{(22)}\\
+\end{array}\right]
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="canonical-variates-and-canonical-correlations-4">Canonical Variates and Canonical Correlations</h3>
+<div>
+<ul>
+<li class="fragment">The covariances between pairs of variables from different sets
+<ul>
+<li class="fragment">One variable from X(1) and one variable from X(2), are contained in X(12)</li>
+</ul></li>
+<li class="fragment">The purpose of this analysis is to summarize the associations between X(1) and X(2) sets
+<ul>
+<li class="fragment">A few carefully chosen covariances (correlations)</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
 <h3 id="pca-and-mlr">PCA and MLR</h3>
+<div>
+<ul>
+<li class="fragment">PCA - focuses on finding linear combinations that account for the most variance in one dataset
+<ul>
+<li class="fragment">Canonical Correlaton Analysis focuses on two datasets</li>
+</ul></li>
+<li class="fragment">MLR - very similar approach to CCA but relationship is known
+<ul>
+<li class="fragment">When one set is considered a response vs one a predictor use MLR</li>
+<li class="fragment">When its not clear on relationship use CCA</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section class="slide level2">
 
-<h3 id="canonical-variables">Canonical Variables</h3>
-</section>
-<section class="slide level2">
-
-<h3 id="canonical-correlation">Canonical Correlation</h3>
-</section>
-<section class="slide level2">
-
-<h3 id="an-example">An Example</h3>
+<h3 id="an-example-in-r">An Example in R</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="|6|8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#| code-line-numbers: "|6|8"</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># load libraries</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(lme4) <span class="co"># linear mixed-effect modeling</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(CCA) <span class="co"># CCA package</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(CCP) <span class="co"># significance tests for CCA</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  PsychTest1 PsychTest2 YrsEdu  IQ HrsTrn HrsWrk ClientSat SuperSat ProjCompl
+1         62         78      5  97      6     33        84       59        34
+2         46         27      2  93      7     54        55       38        56
+3         68         75      2  96      5     47        70       68        38
+4         55         56      4 103      7     80        63       81        78
+5         51         32      4  98      5     53        55       39        56
+6         51         66      3 102     10     56        63       68        57</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$cor
+[1] 0.9900690 0.9321929 0.8093344
+
+$xcoef
+                    [,1]          [,2]          [,3]          [,4]
+PsychTest1 -9.923542e-05 -0.0018044569  3.494256e-03 -4.677900e-04
+PsychTest2 -6.736361e-04 -0.0009630136 -2.386238e-03  5.706027e-04
+YrsEdu     -6.669989e-04 -0.0003356070  5.259408e-03  7.573749e-03
+IQ         -6.778766e-04 -0.0008191085 -2.126358e-03 -9.293717e-03
+HrsTrn     -7.909143e-05 -0.0019560206  2.452931e-03 -1.837929e-04
+HrsWrk     -1.252183e-03  0.0005194347 -5.484026e-05  9.797022e-05
+                    [,5]          [,6]
+PsychTest1  0.0004629180  0.0009468091
+PsychTest2 -0.0002165319 -0.0003051851
+YrsEdu     -0.0152364295 -0.0108830216
+IQ          0.0003930777  0.0006152953
+HrsTrn      0.0125216480 -0.0179054197
+HrsWrk     -0.0010276758  0.0015111622
+
+$ycoef
+                   [,1]         [,2]         [,3]
+ClientSat -5.335248e-05 -0.001031411  0.001769951
+SuperSat  -1.126052e-03 -0.001572913 -0.003065230
+ProjCompl -6.594502e-04  0.001690408  0.002148974
+
+$xcenter
+PsychTest1 PsychTest2     YrsEdu         IQ     HrsTrn     HrsWrk 
+    49.990     49.286      2.506     97.587      6.028     47.810 
+
+$ycenter
+ClientSat  SuperSat ProjCompl 
+   54.970    49.912    48.127 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+</section>
+<section class="slide level2">
+
+<h3 id="an-example-in-r-1">An Example in R</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+</div>
+<div class="cell-output-display">
+<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-2.png" width="960"></p>
+</div>
+<div class="cell-output-display">
+<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-3.png" width="960"></p>
+</div>
+<div class="cell-output-display">
+<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-4.png" width="960"></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="an-example-in-python">An Example in Python</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># import libraries</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> CCA</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># import the csv file directly from an s3 bucket</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>example <span class="op">=</span> pd.read_csv(<span class="st">'CanonicalCorrelationAnalysisData.csv'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Split the data in X and Y</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>X <span class="op">=</span> example[[<span class="st">'PsychTest1'</span>,  <span class="st">'PsychTest2'</span>, <span class="st">'YrsEdu'</span>, <span class="st">'IQ'</span>, <span class="st">'HrsTrn'</span>, <span class="st">'HrsWrk'</span>]]</span>
+<span id="cb3-10"><a href="#cb3-10"></a>Y <span class="op">=</span> example[[<span class="st">'ClientSat'</span>,   <span class="st">'SuperSat'</span>, <span class="st">'ProjCompl'</span>]]</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Instantiate the Canonical Correlation Analysis with 2 components</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>my_cca <span class="op">=</span> CCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># Fit the model</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>my_cca.fit(X, Y)</span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># Obtain the rotation matrices</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>xrot <span class="op">=</span> my_cca.x_rotations_</span>
+<span id="cb3-21"><a href="#cb3-21"></a>yrot <span class="op">=</span> my_cca.y_rotations_</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co"># Put them together in a numpy matrix</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>xyrot <span class="op">=</span> np.vstack((xrot,yrot))</span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a>nvariables <span class="op">=</span> xyrot.shape[<span class="dv">0</span>]</span>
+<span id="cb3-27"><a href="#cb3-27"></a></span>
+<span id="cb3-28"><a href="#cb3-28"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb3-29"><a href="#cb3-29"></a>plt.xlim((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb3-30"><a href="#cb3-30"></a>plt.ylim((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb3-31"><a href="#cb3-31"></a></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="co"># Plot an arrow and a text label for each variable</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="cf">for</span> var_i <span class="kw">in</span> <span class="bu">range</span>(nvariables):</span>
+<span id="cb3-34"><a href="#cb3-34"></a>  x <span class="op">=</span> xyrot[var_i,<span class="dv">0</span>]</span>
+<span id="cb3-35"><a href="#cb3-35"></a>  y <span class="op">=</span> xyrot[var_i,<span class="dv">1</span>]</span>
+<span id="cb3-36"><a href="#cb3-36"></a>  </span>
+<span id="cb3-37"><a href="#cb3-37"></a>  plt.arrow(<span class="dv">0</span>,<span class="dv">0</span>,x,y)</span>
+<span id="cb3-38"><a href="#cb3-38"></a>  plt.text(x,y,data.columns[i], color<span class="op">=</span><span class="st">'red'</span> <span class="cf">if</span> i <span class="op">&gt;=</span> <span class="dv">6</span> <span class="cf">else</span> <span class="st">'blue'</span>)</span>
+<span id="cb3-39"><a href="#cb3-39"></a></span>
+<span id="cb3-40"><a href="#cb3-40"></a><span class="co"># show plot</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="summary">Summary</h3>
+<div>
+<ul>
+<li class="fragment">CCA is used with two sets of variables where respone-predictor relationship is unclear</li>
+<li class="fragment">Requires a large amount of data</li>
+<li class="fragment">Maximum combinations of associations between two datasets</li>
+</ul>
 </div>
 </section>
 <section class="slide level2">
@@ -461,6 +667,7 @@
 <li><a href="https://stats.oarc.ucla.edu/r/dae/canonical-correlation-analysis/#:~:text=Canonical%20correlation%20analysis%20is%20used,are%20multiple%20intercorrelated%20outcome%20variables">UCLA Lecture Material</a></li>
 <li><a href="https://towardsdatascience.com/canonical-correlation-analysis-b1a38847219d">Towards Data Science Article</a></li>
 <li><a href="https://medium.com/analytics-vidhya/canonical-correlation-analysis-cca-in-r-a-non-technical-primer-b67d9bdeb9dd">Medium Article</a></li>
+<li><a href="https://articledatas3.s3.eu-central-1.amazonaws.com/CanonicalCorrelationAnalysisData.csv">AWS Dataset</a></li>
 </ul>
 </div>
 </section>
@@ -474,19 +681,19 @@
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="Canonical Correlation Analysis_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="CCA_Update_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

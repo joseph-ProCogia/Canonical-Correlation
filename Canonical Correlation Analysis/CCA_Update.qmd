@@ -12,12 +12,12 @@ editor: visual
 ::: incremental
 -   What is Canonical Correlation Analysis?
 -   Defining Canonical Correlations
+-   Canonical Variates and Canonical Correlations
 -   When to use CCA?
     -   PCA vs CCA
     -   MLR vs CCA
--   Canonical Variates and Canonical Correlations
--   An Example in R
--   An Example in python
+-   An Example (R and Python provided)
+-   Summary
 -   References
 :::
 
@@ -56,22 +56,91 @@ editor: visual
 
 ------------------------------------------------------------------------
 
-### PCA and MLR
+### Canonical Variates and Canonical Correlations
+
+::: incremental
+-   We are interested in defining the relationship between two sets of variables
+-   Lets say the first set of variables is represented by the random vector (p x 1) $$X^{(1)}$$
+-   Lets say the second set of variables is represented by the random vector (q x 1) $$X^{(2)}$$
+:::
+
+------------------------------------------------------------------------
+
+### Canonical Variates and Canonical Correlations
+
+$$
+\begin{align}
+    \text{Assume X(1) is smaller} && X^{(1)} \\
+    \text{Such that} && p \le q && \text{and} && X^{(1)} \le X^{(2)} \\
+    \text{Let} && E(X^{(1)}) = u^{(1)} && \text{and} && E(X^{(2)}) = u^{(2)}
+\end{align}
+$$
+
+------------------------------------------------------------------------
+
+### Canonical Variates and Canonical Correlations
+
+-   We consider the X(1) and X(2) jointly here
+
+$$\mathbf{X_{(p+q)~~x~~1)}} = \left[\begin{array}
+{rrr}
+X_1^{(1)} \\
+X_2^{(1)} \\
+X_p^{(1)} \\
+.....   \\
+X_1^{(2)} \\
+X_2^{(2)} \\
+X_p^{(2)} \\
+\end{array}\right]
+$$
+
+------------------------------------------------------------------------
+
+### Canonical Variates and Canonical Correlations
+
+-   This has a mean vector of
+
+$$\frac{E(X^{1})}{E(X^{2})} = \frac{u(X^{1})}{u(X^{2})}$$
+
+-   And a covariance matrix of
+
+$$\mathbf{E{(X-u)(X-u)'}} = \left[\begin{array}
+{rrr}
+X_{p*p}{(11)} && X_{p*q}{(12)}\\
+....... && ........   \\
+X_{q*p}{(21)} && X_{q*q}{(22)}\\
+\end{array}\right]
+$$
 
 ------------------------------------------------------------------------
 
 ### Canonical Variates and Canonical Correlations
 
 ::: incremental
+-   The covariances between pairs of variables from different sets
+    -   One variable from X(1) and one variable from X(2), are contained in X(12)
+-   The purpose of this analysis is to summarize the associations between X(1) and X(2) sets
+    -   A few carefully chosen covariances (correlations)
+:::
+
+------------------------------------------------------------------------
+
+### PCA and MLR
+
+::: incremental
+-   PCA - focuses on finding linear combinations that account for the most variance in one dataset
+    -   Canonical Correlaton Analysis focuses on two datasets
+    
+-   MLR - very similar approach to CCA but relationship is known
+    -   When one set is considered a response vs one a predictor use MLR
+    -   When its not clear on relationship use CCA
 :::
 
 ------------------------------------------------------------------------
 
 ### An Example in R
 
-```{r}
-#| echo: fenced
-#| #| code-line-numbers: "|6|8"
+```{r, echo=FALSE}
 
 # load libraries
 library(lme4) # linear mixed-effect modeling
@@ -95,6 +164,17 @@ model <- cancor(X,Y)
 # Show the model results
 print(model)
 
+
+
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### An Example in R
+
+```{r, echo=FALSE}
 
 # Show the Canonical correlations per dimension to decide on the number of dimensions
 barplot(model$cor, xlab = "Dimension", ylab = "Canonical correlations", ylim = c(0,1), xlim=c(0,3))
@@ -122,13 +202,10 @@ plt.var(model2, 2, 3, var.label = TRUE)
 ``` python
 # import libraries
 import pandas as pd
-
+from sklearn.cross_decomposition import CCA
 
 # import the csv file directly from an s3 bucket
 example = pd.read_csv('CanonicalCorrelationAnalysisData.csv')
-
-
-from sklearn.cross_decomposition import CCA
 
 # Split the data in X and Y
 X = example[['PsychTest1',  'PsychTest2', 'YrsEdu', 'IQ', 'HrsTrn', 'HrsWrk']]
@@ -165,6 +242,16 @@ for var_i in range(nvariables):
 # show plot
 plt.show()
 ```
+
+------------------------------------------------------------------------
+
+### Summary
+
+::: incremental
+-   CCA is used with two sets of variables where respone-predictor relationship is unclear
+-   Requires a large amount of data 
+-   Maximum combinations of associations between two datasets
+:::
 
 ------------------------------------------------------------------------
 
