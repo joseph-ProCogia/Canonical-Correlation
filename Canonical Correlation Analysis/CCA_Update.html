@@ -454,11 +454,13 @@
 <section class="slide level2">
 
 <h3 id="canonical-variates-and-canonical-correlations-1">Canonical Variates and Canonical Correlations</h3>
+<ul>
+<li>Assume X(1) is smaller such that</li>
+</ul>
 <p><span class="math display">\[
 \begin{align}
-    \text{Assume X(1) is smaller} &amp;&amp; X^{(1)} \\
-    \text{Such that} &amp;&amp; p \le q &amp;&amp; \text{and} &amp;&amp; X^{(1)} \le X^{(2)} \\
-    \text{Let} &amp;&amp; E(X^{(1)}) = u^{(1)} &amp;&amp; \text{and} &amp;&amp; E(X^{(2)}) = u^{(2)}
+    p \le q &amp;&amp; \text{and} &amp;&amp; X^{(1)} \le X^{(2)} \\
+    E(X^{(1)}) = u^{(1)} &amp;&amp; \text{and} &amp;&amp; E(X^{(2)}) = u^{(2)}
 \end{align}
 \]</span></p>
 </section>
@@ -468,7 +470,7 @@
 <ul>
 <li>We consider the X(1) and X(2) jointly here</li>
 </ul>
-<p><span class="math display">\[\mathbf{X_{(p+q)~~x~~1)}} = \left[\begin{array}
+<p><span class="math display">\[\mathbf{X_{((p+q)~~x~~1)}} = \left[\begin{array}
 {rrr}
 X_1^{(1)} \\
 X_2^{(1)} \\
@@ -516,12 +518,57 @@ X_{q*p}{(21)} &amp;&amp; X_{q*q}{(22)}\\
 </section>
 <section class="slide level2">
 
+<h3 id="canonical-variates-and-canonical-correlations-5">Canonical Variates and Canonical Correlations</h3>
+<ul>
+<li>We can use linear combinations to provide summary measures of a set of variables for some pair of coefficients (a and b)</li>
+<li>We obtain the following for Cov(U,V)</li>
+</ul>
+<p><span class="math display">\[
+\begin{align}
+    U=a'X^{(1)} &amp;&amp; \text{and} &amp;&amp; V = b'X^{(2)} \\
+    Var(U) = a'Cov(X^{(1)})a &amp;&amp; \text{and} &amp;&amp; Var(V) = b'Cov(X^{(2)})b \\
+\end{align}
+\]</span></p>
+<p><span class="math display">\[Cov(U,V) = a'Cov(X^{(1)}, X^{(2)})b =  a'\sum_{12}b\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="canonical-variates-and-canonical-correlations-6">Canonical Variates and Canonical Correlations</h3>
+<ul>
+<li>We look for the coefficient vectors a and b where Corr(U, V) is as large as possible</li>
+</ul>
+<p><span class="math display">\[Corr(U,V)= \frac{a' \sum_{12}b}{\sqrt{a'\sum_{11}a } * \sqrt{b'\sum_{22}b}}\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="canonical-variates-and-canonical-correlations-7">Canonical Variates and Canonical Correlations</h3>
+<div>
+<ul>
+<li class="fragment"><p>The first pair of canonical variables (variate pair) is the pair of linear combinations U(1) and V(1) having unit variances that maximize the correlation</p></li>
+<li class="fragment"><p>The second pair of canonical variables is the pair of linear combination U(2) and V(2) that maximize the correlation among all choices that are uncorrelated with the first pair of variables</p></li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="simpler-terms">Simpler Terms</h3>
+<div>
+<ul>
+<li class="fragment">We start off with two sets of data</li>
+<li class="fragment">We seek to maximize the explainable variability of one set on variables through linear combinations</li>
+<li class="fragment">We seen to then maximize the variability of another set of variables through linear combinations</li>
+<li class="fragment">We finally look to maximize the correlation between those two set of variables accounting for the most variation among sets for a relationship</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
 <h3 id="pca-and-mlr">PCA and MLR</h3>
 <div>
 <ul>
 <li class="fragment">PCA - focuses on finding linear combinations that account for the most variance in one dataset
 <ul>
-<li class="fragment">Canonical Correlaton Analysis focuses on two datasets</li>
+<li class="fragment">Canonical Correlation Analysis focuses on two data sets</li>
 </ul></li>
 <li class="fragment">MLR - very similar approach to CCA but relationship is known
 <ul>
@@ -536,14 +583,56 @@ X_{q*p}{(21)} &amp;&amp; X_{q*q}{(22)}\\
 <h3 id="an-example-in-r">An Example in R</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>  PsychTest1 PsychTest2 YrsEdu  IQ HrsTrn HrsWrk ClientSat SuperSat ProjCompl
-1         62         78      5  97      6     33        84       59        34
-2         46         27      2  93      7     54        55       38        56
-3         68         75      2  96      5     47        70       68        38
-4         55         56      4 103      7     80        63       81        78
-5         51         32      4  98      5     53        55       39        56
-6         51         66      3 102     10     56        63       68        57</code></pre>
+<pre><code>   PsychTest1 PsychTest2 YrsEdu  IQ HrsTrn HrsWrk ClientSat SuperSat ProjCompl
+1          62         78      5  97      6     33        84       59        34
+2          46         27      2  93      7     54        55       38        56
+3          68         75      2  96      5     47        70       68        38
+4          55         56      4 103      7     80        63       81        78
+5          51         32      4  98      5     53        55       39        56
+6          51         66      3 102     10     56        63       68        57
+7          55         40      0  98      8     54        61       53        53
+8          55         64      1  95      7     75        58       71        75
+9          50         33      2  96     10     69        63       61        62
+10         55         36      0  94      6     68        66       56        63</code></pre>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   PsychTest1      PsychTest2        YrsEdu            IQ        
+ Min.   :20.00   Min.   : 5.00   Min.   :0.000   Min.   : 90.00  
+ 1st Qu.:43.00   1st Qu.:38.75   1st Qu.:1.000   1st Qu.: 95.00  
+ Median :50.00   Median :50.00   Median :3.000   Median : 97.00  
+ Mean   :49.99   Mean   :49.29   Mean   :2.506   Mean   : 97.59  
+ 3rd Qu.:57.00   3rd Qu.:60.00   3rd Qu.:4.000   3rd Qu.:101.00  
+ Max.   :81.00   Max.   :90.00   Max.   :5.000   Max.   :105.00  
+     HrsTrn           HrsWrk         ClientSat         SuperSat     
+ Min.   : 0.000   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00  
+ 1st Qu.: 4.000   1st Qu.: 30.00   1st Qu.: 43.00   1st Qu.: 38.00  
+ Median : 6.000   Median : 47.00   Median : 55.00   Median : 50.00  
+ Mean   : 6.028   Mean   : 47.81   Mean   : 54.97   Mean   : 49.91  
+ 3rd Qu.: 8.000   3rd Qu.: 64.00   3rd Qu.: 67.00   3rd Qu.: 62.00  
+ Max.   :17.000   Max.   :100.00   Max.   :100.00   Max.   :100.00  
+   ProjCompl     
+ Min.   :  0.00  
+ 1st Qu.: 33.00  
+ Median : 48.00  
+ Mean   : 48.13  
+ 3rd Qu.: 63.00  
+ Max.   :100.00  </code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="an-example-in-r-1">An Example in R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Define X and Y data</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>X <span class="ot">=</span> example[,<span class="fu">c</span>(<span class="st">'PsychTest1'</span>, <span class="st">'PsychTest2'</span>, <span class="st">'YrsEdu'</span>, <span class="st">'IQ'</span>, <span class="st">'HrsTrn'</span>, <span class="st">'HrsWrk'</span>)]</span>
+<span id="cb3-3"><a href="#cb3-3"></a>Y <span class="ot">=</span> example[,<span class="fu">c</span>(<span class="st">'ClientSat'</span>, <span class="st">'SuperSat'</span>, <span class="st">'ProjCompl'</span>)]</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Fit Canonical Correlation Analysis using built-in cancor function</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>model <span class="ot">&lt;-</span> <span class="fu">cancor</span>(X,Y)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Show the model results</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">print</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$cor
 [1] 0.9900690 0.9321929 0.8093344
@@ -582,69 +671,68 @@ ClientSat  SuperSat ProjCompl
 </section>
 <section class="slide level2">
 
-</section>
+<h3 id="an-example-in-r-2">An Example in R</h3>
+
+<img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
-<h3 id="an-example-in-r-1">An Example in R</h3>
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
-</div>
-<div class="cell-output-display">
-<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-2.png" width="960"></p>
-</div>
-<div class="cell-output-display">
-<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-3.png" width="960"></p>
-</div>
-<div class="cell-output-display">
-<p><img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-2-4.png" width="960"></p>
-</div>
-</div>
-</section>
+<h3 id="an-example-in-r-3">An Example in R</h3>
+
+<img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="an-example-in-r-4">An Example in R</h3>
+
+<img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+<h3 id="an-example-in-r-5">An Example in R</h3>
+
+<img data-src="CCA_Update_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
 <section class="slide level2">
 
 <h3 id="an-example-in-python">An Example in Python</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># import libraries</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> CCA</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># import the csv file directly from an s3 bucket</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>example <span class="op">=</span> pd.read_csv(<span class="st">'CanonicalCorrelationAnalysisData.csv'</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Split the data in X and Y</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>X <span class="op">=</span> example[[<span class="st">'PsychTest1'</span>,  <span class="st">'PsychTest2'</span>, <span class="st">'YrsEdu'</span>, <span class="st">'IQ'</span>, <span class="st">'HrsTrn'</span>, <span class="st">'HrsWrk'</span>]]</span>
-<span id="cb3-10"><a href="#cb3-10"></a>Y <span class="op">=</span> example[[<span class="st">'ClientSat'</span>,   <span class="st">'SuperSat'</span>, <span class="st">'ProjCompl'</span>]]</span>
-<span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Instantiate the Canonical Correlation Analysis with 2 components</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>my_cca <span class="op">=</span> CCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb3-14"><a href="#cb3-14"></a></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># Fit the model</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>my_cca.fit(X, Y)</span>
-<span id="cb3-17"><a href="#cb3-17"></a></span>
-<span id="cb3-18"><a href="#cb3-18"></a></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># Obtain the rotation matrices</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>xrot <span class="op">=</span> my_cca.x_rotations_</span>
-<span id="cb3-21"><a href="#cb3-21"></a>yrot <span class="op">=</span> my_cca.y_rotations_</span>
-<span id="cb3-22"><a href="#cb3-22"></a></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co"># Put them together in a numpy matrix</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a>xyrot <span class="op">=</span> np.vstack((xrot,yrot))</span>
-<span id="cb3-25"><a href="#cb3-25"></a></span>
-<span id="cb3-26"><a href="#cb3-26"></a>nvariables <span class="op">=</span> xyrot.shape[<span class="dv">0</span>]</span>
-<span id="cb3-27"><a href="#cb3-27"></a></span>
-<span id="cb3-28"><a href="#cb3-28"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
-<span id="cb3-29"><a href="#cb3-29"></a>plt.xlim((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb3-30"><a href="#cb3-30"></a>plt.ylim((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb3-31"><a href="#cb3-31"></a></span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="co"># Plot an arrow and a text label for each variable</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a><span class="cf">for</span> var_i <span class="kw">in</span> <span class="bu">range</span>(nvariables):</span>
-<span id="cb3-34"><a href="#cb3-34"></a>  x <span class="op">=</span> xyrot[var_i,<span class="dv">0</span>]</span>
-<span id="cb3-35"><a href="#cb3-35"></a>  y <span class="op">=</span> xyrot[var_i,<span class="dv">1</span>]</span>
-<span id="cb3-36"><a href="#cb3-36"></a>  </span>
-<span id="cb3-37"><a href="#cb3-37"></a>  plt.arrow(<span class="dv">0</span>,<span class="dv">0</span>,x,y)</span>
-<span id="cb3-38"><a href="#cb3-38"></a>  plt.text(x,y,data.columns[i], color<span class="op">=</span><span class="st">'red'</span> <span class="cf">if</span> i <span class="op">&gt;=</span> <span class="dv">6</span> <span class="cf">else</span> <span class="st">'blue'</span>)</span>
-<span id="cb3-39"><a href="#cb3-39"></a></span>
-<span id="cb3-40"><a href="#cb3-40"></a><span class="co"># show plot</span></span>
-<span id="cb3-41"><a href="#cb3-41"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># import libraries</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> CCA</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># import the csv file directly from an s3 bucket</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>example <span class="op">=</span> pd.read_csv(<span class="st">'CanonicalCorrelationAnalysisData.csv'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># Split the data in X and Y</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>X <span class="op">=</span> example[[<span class="st">'PsychTest1'</span>,  <span class="st">'PsychTest2'</span>, <span class="st">'YrsEdu'</span>, <span class="st">'IQ'</span>, <span class="st">'HrsTrn'</span>, <span class="st">'HrsWrk'</span>]]</span>
+<span id="cb5-10"><a href="#cb5-10"></a>Y <span class="op">=</span> example[[<span class="st">'ClientSat'</span>,   <span class="st">'SuperSat'</span>, <span class="st">'ProjCompl'</span>]]</span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># Instantiate the Canonical Correlation Analysis with 2 components</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>my_cca <span class="op">=</span> CCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># Fit the model</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>my_cca.fit(X, Y)</span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co"># Obtain the rotation matrices</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>xrot <span class="op">=</span> my_cca.x_rotations_</span>
+<span id="cb5-21"><a href="#cb5-21"></a>yrot <span class="op">=</span> my_cca.y_rotations_</span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co"># Put them together in a numpy matrix</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a>xyrot <span class="op">=</span> np.vstack((xrot,yrot))</span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a>nvariables <span class="op">=</span> xyrot.shape[<span class="dv">0</span>]</span>
+<span id="cb5-27"><a href="#cb5-27"></a></span>
+<span id="cb5-28"><a href="#cb5-28"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb5-29"><a href="#cb5-29"></a>plt.xlim((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb5-30"><a href="#cb5-30"></a>plt.ylim((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb5-31"><a href="#cb5-31"></a></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co"># Plot an arrow and a text label for each variable</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="cf">for</span> var_i <span class="kw">in</span> <span class="bu">range</span>(nvariables):</span>
+<span id="cb5-34"><a href="#cb5-34"></a>  x <span class="op">=</span> xyrot[var_i,<span class="dv">0</span>]</span>
+<span id="cb5-35"><a href="#cb5-35"></a>  y <span class="op">=</span> xyrot[var_i,<span class="dv">1</span>]</span>
+<span id="cb5-36"><a href="#cb5-36"></a>  </span>
+<span id="cb5-37"><a href="#cb5-37"></a>  plt.arrow(<span class="dv">0</span>,<span class="dv">0</span>,x,y)</span>
+<span id="cb5-38"><a href="#cb5-38"></a>  plt.text(x,y,data.columns[i], color<span class="op">=</span><span class="st">'red'</span> <span class="cf">if</span> i <span class="op">&gt;=</span> <span class="dv">6</span> <span class="cf">else</span> <span class="st">'blue'</span>)</span>
+<span id="cb5-39"><a href="#cb5-39"></a></span>
+<span id="cb5-40"><a href="#cb5-40"></a><span class="co"># show plot</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section class="slide level2">
 
@@ -670,9 +758,6 @@ ClientSat  SuperSat ProjCompl
 <li><a href="https://articledatas3.s3.eu-central-1.amazonaws.com/CanonicalCorrelationAnalysisData.csv">AWS Dataset</a></li>
 </ul>
 </div>
-</section>
-<section class="slide level2">
-
 <div class="footer footer-default">
 
 </div>

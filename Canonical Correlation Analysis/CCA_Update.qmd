@@ -68,11 +68,12 @@ editor: visual
 
 ### Canonical Variates and Canonical Correlations
 
+-   Assume X(1) is smaller such that
+
 $$
 \begin{align}
-    \text{Assume X(1) is smaller} && X^{(1)} \\
-    \text{Such that} && p \le q && \text{and} && X^{(1)} \le X^{(2)} \\
-    \text{Let} && E(X^{(1)}) = u^{(1)} && \text{and} && E(X^{(2)}) = u^{(2)}
+    p \le q && \text{and} && X^{(1)} \le X^{(2)} \\
+    E(X^{(1)}) = u^{(1)} && \text{and} && E(X^{(2)}) = u^{(2)}
 \end{align}
 $$
 
@@ -82,7 +83,7 @@ $$
 
 -   We consider the X(1) and X(2) jointly here
 
-$$\mathbf{X_{(p+q)~~x~~1)}} = \left[\begin{array}
+$$\mathbf{X_{((p+q)~~x~~1)}} = \left[\begin{array}
 {rrr}
 X_1^{(1)} \\
 X_2^{(1)} \\
@@ -125,12 +126,56 @@ $$
 
 ------------------------------------------------------------------------
 
+### Canonical Variates and Canonical Correlations
+
+-   We can use linear combinations to provide summary measures of a set of variables for some pair of coefficients (a and b)
+-   We obtain the following for Cov(U,V)
+
+$$
+\begin{align}
+    U=a'X^{(1)} && \text{and} && V = b'X^{(2)} \\
+    Var(U) = a'Cov(X^{(1)})a && \text{and} && Var(V) = b'Cov(X^{(2)})b \\
+\end{align}
+$$
+
+$$Cov(U,V) = a'Cov(X^{(1)}, X^{(2)})b =  a'\sum_{12}b$$
+
+------------------------------------------------------------------------
+
+### Canonical Variates and Canonical Correlations
+
+-   We look for the coefficient vectors a and b where Corr(U, V) is as large as possible
+
+$$Corr(U,V)= \frac{a' \sum_{12}b}{\sqrt{a'\sum_{11}a } * \sqrt{b'\sum_{22}b}}$$
+
+------------------------------------------------------------------------
+
+### Canonical Variates and Canonical Correlations
+
+::: incremental
+-   The first pair of canonical variables (variate pair) is the pair of linear combinations U(1) and V(1) having unit variances that maximize the correlation
+
+-   The second pair of canonical variables is the pair of linear combination U(2) and V(2) that maximize the correlation among all choices that are uncorrelated with the first pair of variables
+:::
+
+------------------------------------------------------------------------
+
+### Simpler Terms
+
+::: incremental
+-   We start off with two sets of data
+-   We seek to maximize the explainable variability of one set on variables through linear combinations
+-   We seen to then maximize the variability of another set of variables through linear combinations
+-   We finally look to maximize the correlation between those two set of variables accounting for the most variation among sets for a relationship
+:::
+
+------------------------------------------------------------------------
+
 ### PCA and MLR
 
 ::: incremental
 -   PCA - focuses on finding linear combinations that account for the most variance in one dataset
-    -   Canonical Correlaton Analysis focuses on two datasets
-    
+    -   Canonical Correlation Analysis focuses on two data sets
 -   MLR - very similar approach to CCA but relationship is known
     -   When one set is considered a response vs one a predictor use MLR
     -   When its not clear on relationship use CCA
@@ -152,7 +197,18 @@ library(ggplot2) # plotting package
 example <- read.csv("CanonicalCorrelationAnalysisData.csv", header = T, sep = ",")
 
 # print 5 rows
-head(example)
+head(example, n=10)
+
+summary(example)
+
+
+```
+
+------------------------------------------------------------------------
+
+### An Example in R
+
+```{r, echo=TRUE}
 
 # Define X and Y data
 X = example[,c('PsychTest1', 'PsychTest2', 'YrsEdu', 'IQ', 'HrsTrn', 'HrsWrk')]
@@ -170,8 +226,6 @@ print(model)
 
 ------------------------------------------------------------------------
 
-------------------------------------------------------------------------
-
 ### An Example in R
 
 ```{r, echo=FALSE}
@@ -180,14 +234,40 @@ print(model)
 barplot(model$cor, xlab = "Dimension", ylab = "Canonical correlations", ylim = c(0,1), xlim=c(0,3))
 
 
+```
+
+------------------------------------------------------------------------
+
+### An Example in R
+
+```{r, echo=FALSE}
+
 # refit model using canonical correlation function
 model2 <- cc(X, Y)
 
 # plot model on scatter plot (Dimensions 1 and 2)
 plt.cc(model2, var.label = TRUE)
 
+
+```
+
+------------------------------------------------------------------------
+
+### An Example in R
+
+```{r, echo=FALSE}
+
 # plot model on scatter plot (Dimensions 1 and 3)
 plt.var(model2, 1, 3, var.label = TRUE)
+
+
+```
+
+------------------------------------------------------------------------
+
+### An Example in R
+
+```{r, echo=FALSE}
 
 # plot model on scatter plot (Dimensions 2 and 3)
 plt.var(model2, 2, 3, var.label = TRUE)
@@ -249,7 +329,7 @@ plt.show()
 
 ::: incremental
 -   CCA is used with two sets of variables where respone-predictor relationship is unclear
--   Requires a large amount of data 
+-   Requires a large amount of data
 -   Maximum combinations of associations between two datasets
 :::
 
@@ -265,5 +345,3 @@ plt.show()
 -   [Medium Article](https://medium.com/analytics-vidhya/canonical-correlation-analysis-cca-in-r-a-non-technical-primer-b67d9bdeb9dd)
 -   [AWS Dataset](https://articledatas3.s3.eu-central-1.amazonaws.com/CanonicalCorrelationAnalysisData.csv)
 :::
-
-------------------------------------------------------------------------
