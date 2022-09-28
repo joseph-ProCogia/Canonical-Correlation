@@ -4,7 +4,7 @@ This repository will provide an overview with examples of Canonical Correlation 
 
 
 ### Content
-- What is Canonical Correlation
+- What is Canonical Correlation Analysis
 - Use cases of Canonical Correlation Analysis
 - PCA vs MLR
 - Canonical Variates
